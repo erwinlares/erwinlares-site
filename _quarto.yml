@@ -1,21 +1,34 @@
 project:
   type: website
+  output-dir: _site
 
 website:
-  title: "erwinlares site"
+  title: "Erwin Lares"
+  description: "Linguist, data scientist, potter, aikidoka"
+  site-url: https://erwinlares.com
+
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: "About"
+        href: about/index.qmd
+      - text: "Blog"
+        href: posts/index.qmd
+      - text: "CV"
+        href: cv/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/erwinlares
+      - icon: envelope
+        href: mailto:lares@aikidoofwisconsin.com
+
+  page-footer:
+    left: "© Erwin Lares"
+    right:
+      - icon: github
+        href: https://github.com/erwinlares
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: lux
     css: styles.css
-    toc: true
-
-
-
+    toc: false
