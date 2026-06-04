@@ -40,7 +40,7 @@ I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a 
         <div class="card-text">
           <h3 class="card-title-text">las rubieras pottery</h3>
           <p class="card-desc-text">las rubieras pottery is functional stoneware made to be held. The name comes from a lush corner of a Venezuelan farm — green against the dry season sun, almost like a mirage.</p>
-          <a href="https://lasrubieraspottery.com" class="card-link-text">Visit the shop →</a>
+          <a href="https://lasrubieraspottery.com" class="card-link-text">Visit the study →</a>
         </div>
       </div>
     </div>
@@ -48,12 +48,12 @@ I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a 
     <div class="card card-aikido">
       <div class="card-inner">
         <div class="card-logo-panel">
-          <img src="images/aikido-logo.png" class="card-logo-img" alt="Aikido of Wisconsin">
+          <img src="images/aikido-logo.png" class="card-logo-img" alt="Capital Aikikai Wisconsin">
         </div>
         <div class="card-vdivider"></div>
         <div class="card-text">
-          <h3 class="card-title-text">Aikido</h3>
-          <p class="card-desc-text">Aikido of Wisconsin, based in Janesville. A martial art centered on harmony, movement, and practice.</p>
+          <h3 class="card-title-text">Capital Aikikai of Wisconsin</h3>
+          <p class="card-desc-text">CAoW is a dojo dedicated to the practice and promotion of the Japanese Martial Art of Aikido. We are a 501.c3 non-profit organization affiliated with [Capital Aikido Federation](https://capitalaikido.org/).</p>
           <a href="https://aikidoofwisconsin.com" class="card-link-text">Visit the dojo →</a>
         </div>
       </div>
