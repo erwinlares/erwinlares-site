@@ -53,7 +53,7 @@ I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a 
         <div class="card-vdivider"></div>
         <div class="card-text">
           <h3 class="card-title-text">Capital Aikikai of Wisconsin</h3>
-          <p class="card-desc-text">CAoW is a dojo dedicated to the practice and promotion of the Japanese Martial Art of Aikido. We are a 501.c3 non-profit organization affiliated with [Capital Aikido Federation](https://capitalaikido.org/).</p>
+          <p class="card-desc-text">CAoW is a dojo dedicated to the practice and promotion of the Japanese Martial Art of Aikido.</p>
           <a href="https://aikidoofwisconsin.com" class="card-link-text">Visit the dojo →</a>
         </div>
       </div>
