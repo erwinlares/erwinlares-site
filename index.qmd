@@ -1,10 +1,10 @@
 ---
-title: "Erwin Lares"
+#title: "Erwin Lares to avoid reduplication 
 page-layout: full
 toc: false
 ---
 
-::: {.column-screen-inset}
+::: {.column-body}
 
 ## Hi, I'm Erwin
 
