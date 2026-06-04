@@ -1,1 +1,224 @@
-/* css styles */
+/* ============================================================
+   erwinlares.com — custom design system
+   Palette: burnt orange · olive · warm gray · amber · cream
+   Fonts:   Cormorant Garamond · Jost · JetBrains Mono
+   ============================================================ */
+
+/* --- Color tokens --- */
+:root {
+  --el-orange: #C4622D;
+  --el-olive:  #5C6B3A;
+  --el-gray:   #6B6860;
+  --el-amber:  #9B7B3A;
+  --el-cream:  #FDFAF7;
+  --el-dark:   #2C2826;
+  --el-text:   #4A4846;
+  --el-border: #E0DAD2;
+}
+
+/* --- Base --- */
+body {
+  background-color: var(--el-cream);
+  color: var(--el-text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: var(--el-dark);
+  line-height: 1.15;
+}
+
+/* --- Navbar --- */
+.navbar-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* --- Links --- */
+a {
+  color: var(--el-orange);
+}
+a:hover {
+  color: var(--el-dark);
+  text-decoration: none;
+}
+
+/* --- Code --- */
+code, pre, kbd, samp,
+.sourceCode, pre.sourceCode,
+div.sourceCode {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.875rem;
+}
+
+div.sourceCode, pre.sourceCode {
+  background-color: #F0EDE8 !important;
+  border-left: 3px solid var(--el-orange);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.25rem;
+}
+
+code:not(pre code) {
+  background-color: #F0EDE8;
+  color: var(--el-orange);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+/* --- Card grid layout --- */
+.cards-grid-outer {
+  padding: 1.5rem 2rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Cards: base --- */
+.card {
+  border: 1px solid var(--el-border) !important;
+  border-radius: 10px !important;
+  background-color: #ffffff;
+  overflow: hidden;
+  padding: 0 !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44, 40, 38, 0.08);
+}
+
+/* --- Cards: colored left borders --- */
+.card-day-job { border-left: 3px solid var(--el-orange) !important; }
+.card-pottery { border-left: 3px solid var(--el-orange) !important; }
+.card-aikido  { border-left: 3px solid var(--el-gray)   !important; }
+.card-brug    { border-left: 3px solid var(--el-amber)  !important; }
+
+/* --- Cards: horizontal inner layout --- */
+.card-inner {
+  display: flex;
+  align-items: stretch;
+  min-height: 170px;
+}
+
+.card-logo-panel {
+  width: 33%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 0.5rem;
+}
+
+.card-logo-img {
+  width: 100%;
+  height: 100%;
+  max-height: 140px;
+  object-fit: contain;
+  display: block;
+}
+
+.card-aikido .card-logo-img {
+  filter: sepia(20%) saturate(0.5) brightness(0.5);
+}
+
+.card-vdivider {
+  width: 1px;
+  background-color: var(--el-border);
+  flex-shrink: 0;
+  margin: 0.875rem 0;
+}
+
+.card-text {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Cards: text elements --- */
+.card-title-text {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: var(--el-dark) !important;
+  text-transform: none !important;
+  margin-bottom: 0.4rem !important;
+  line-height: 1.2 !important;
+}
+
+.card-desc-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem !important;
+  font-weight: 300;
+  color: var(--el-gray);
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+
+.card-link-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--el-orange) !important;
+  text-decoration: none;
+}
+
+.card-link-text:hover {
+  color: var(--el-dark) !important;
+}
+
+/* --- Blog listing --- */
+.listing-category {
+  font-family: 'Jost', sans-serif !important;
+  font-size: 0.7rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--el-olive) !important;
+  border-color: var(--el-olive) !important;
+}
+
+.listing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+}
+
+/* --- Blockquote --- */
+blockquote {
+  border-left: 3px solid var(--el-orange);
+  padding-left: 1rem;
+  color: var(--el-gray);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+}
+
+/* --- Footer --- */
+.nav-footer {
+  border-top: 1px solid var(--el-border);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  color: var(--el-gray);
+  background-color: var(--el-cream);
+}

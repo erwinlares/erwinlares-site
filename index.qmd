@@ -1,5 +1,4 @@
 ---
-#title: "Erwin Lares to avoid reduplication 
 page-layout: full
 toc: false
 ---
@@ -8,48 +7,72 @@ toc: false
 
 ## Hi, I'm Erwin
 
-I'm a linguist, a data scientist, a potter, a dog dad and an aikidoist. I finished
-my PhD in linguistics at UW-Madison in 2022, and I currently work as a
-Research Data Science Consultant at the Office of Research
-Cyberinfrastructure. I also lead the Badger R User Group, run a pottery
-business, and teach Aikido in Janesville, WI.
+Language got me into academia and coffee keeps me there. I'm a linguist, a data scientist, a hobby potter, an aikidoist, and a dog dad. My Ph.D. dissertation was technically about idiomatic phrases — but really more about how we are able to capture nuances even when we are not consciously aware of them.
 
-This site is where all of those things live together.
+I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a community of R users working to make research computing more accessible. I'm a humanist: I believe good tools should be in everyone's hands and that fairness matters in how we build them.
 
 :::
 
-::: {.column-screen-inset .grid}
+```{=html}
+<div class="cards-grid-outer">
+  <div class="cards-grid">
 
-::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
-### Day Job
-Research Data Science Consultant at UW-Madison. I help researchers
-work smarter with data, 
+    <div class="card card-day-job">
+      <div class="card-inner">
+        <div class="card-logo-panel">
+          <img src="images/dayjob-logo.png" class="card-logo-img" alt="Research Data Science">
+        </div>
+        <div class="card-vdivider"></div>
+        <div class="card-text">
+          <h3 class="card-title-text">Day Job</h3>
+          <p class="card-desc-text">Research Data Science Consultant at UW-Madison. I work with researchers on the tools and strategies that make their work more reproducible, shareable, and visible.</p>
+          <a href="day-job/" class="card-link-text">Learn more →</a>
+        </div>
+      </div>
+    </div>
 
-[Learn more →](day-job/index.qmd)
-:::
+    <div class="card card-pottery">
+      <div class="card-inner">
+        <div class="card-logo-panel">
+          <img src="images/pottery-logo.png" class="card-logo-img" alt="las rubieras pottery">
+        </div>
+        <div class="card-vdivider"></div>
+        <div class="card-text">
+          <h3 class="card-title-text">las rubieras pottery</h3>
+          <p class="card-desc-text">las rubieras pottery is functional stoneware made to be held. The name comes from a lush corner of a Venezuelan farm — green against the dry season sun, almost like a mirage.</p>
+          <a href="https://lasrubieraspottery.com" class="card-link-text">Visit the shop →</a>
+        </div>
+      </div>
+    </div>
 
-::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
-### Pottery
-las rubieras pottery — functional stoneware made in Wisconsin.
-Especially active in the summer.
+    <div class="card card-aikido">
+      <div class="card-inner">
+        <div class="card-logo-panel">
+          <img src="images/aikido-logo.png" class="card-logo-img" alt="Aikido of Wisconsin">
+        </div>
+        <div class="card-vdivider"></div>
+        <div class="card-text">
+          <h3 class="card-title-text">Aikido</h3>
+          <p class="card-desc-text">Aikido of Wisconsin, based in Janesville. A martial art centered on harmony, movement, and practice.</p>
+          <a href="https://aikidoofwisconsin.com" class="card-link-text">Visit the dojo →</a>
+        </div>
+      </div>
+    </div>
 
-[Visit the shop →](https://lasrubieraspottery.com)
-:::
+    <div class="card card-brug">
+      <div class="card-inner">
+        <div class="card-logo-panel">
+          <img src="images/brug-logo.png" class="card-logo-img" alt="BRUG logo">
+        </div>
+        <div class="card-vdivider"></div>
+        <div class="card-text">
+          <h3 class="card-title-text">BRUG</h3>
+          <p class="card-desc-text">The Badger R User Group — a community of practice for researchers who code in R at UW-Madison.</p>
+          <a href="brug/" class="card-link-text">Visit BRUG →</a>
+        </div>
+      </div>
+    </div>
 
-::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
-### Aikido
-Capital Aikikai of Wisconsin, based in Janesville. An aikido martial art dojo centered
-on harmony, movement, and practice.
-
-[Visit the dojo →](https://aikidoofwisconsin.com)
-:::
-
-::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
-### BRUG
-The Badger R User Group — a community of practice for researchers
-who code in R at UW-Madison.
-
-[Visit BRUG →](https://erwinlares.github.io/the-burrows)
-:::
-
-:::
+  </div>
+</div>
+```

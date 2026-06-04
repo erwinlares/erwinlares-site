@@ -6,6 +6,7 @@ website:
   title: "Erwin Lares"
   description: "Linguist, data scientist, potter, aikidoka"
   site-url: https://erwinlares.com
+  favicon: favicon.png
 
   navbar:
     left:
@@ -19,7 +20,7 @@ website:
       - icon: github
         href: https://github.com/erwinlares
       - icon: envelope
-        href: mailto:lares@aikidoofwisconsin.com
+        href: mailto:lares@wisc.edu
 
   page-footer:
     left: "© Erwin Lares"
@@ -32,3 +33,8 @@ format:
     theme: lux
     css: styles.css
     toc: false
+    include-in-header:
+      text: |
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
