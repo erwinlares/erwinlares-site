@@ -1,7 +1,55 @@
 ---
-title: "erwinlares site"
+title: "Erwin Lares"
+page-layout: full
+toc: false
 ---
 
-This is a Quarto website.
+::: {.column-screen-inset}
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Hi, I'm Erwin
+
+I'm a linguist, a data scientist, a potter, a dog dad and an aikidoist. I finished
+my PhD in linguistics at UW-Madison in 2022, and I currently work as a
+Research Data Science Consultant at the Office of Research
+Cyberinfrastructure. I also lead the Badger R User Group, run a pottery
+business, and teach Aikido in Janesville, WI.
+
+This site is where all of those things live together.
+
+:::
+
+::: {.column-screen-inset .grid}
+
+::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
+### Day Job
+Research Data Science Consultant at UW-Madison. I help researchers
+work smarter with data, 
+
+[Learn more →](day-job/index.qmd)
+:::
+
+::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
+### Pottery
+las rubieras pottery — functional stoneware made in Wisconsin.
+Especially active in the summer.
+
+[Visit the shop →](https://lasrubieraspottery.com)
+:::
+
+::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
+### Aikido
+Capital Aikikai of Wisconsin, based in Janesville. An aikido martial art dojo centered
+on harmony, movement, and practice.
+
+[Visit the dojo →](https://aikidoofwisconsin.com)
+:::
+
+::: {.g-col-12 .g-col-md-6 .card .p-4 .m-2}
+### BRUG
+The Badger R User Group — a community of practice for researchers
+who code in R at UW-Madison.
+
+[Visit BRUG →](https://erwinlares.github.io/the-burrows)
+:::
+
+:::
