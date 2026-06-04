@@ -1,0 +1,5 @@
+/.quarto/
+/_site/
+.Renviron
+
+**/*.quarto_ipynb
