@@ -1,0 +1,6 @@
+author: "Erwin Lares"
+freeze: auto
+format:
+  html:
+    toc: true
+    toc-depth: 3
