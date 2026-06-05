@@ -7,7 +7,7 @@ categories:
   - personal
   - productivity
   - coding
-status: draft
+status: published
 publish_to:
   - erwinlares
   - lasrubieraspottery
