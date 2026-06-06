@@ -46,6 +46,7 @@ h1, h2, h3, h4, h5, h6,
 a {
   color: var(--el-orange);
 }
+
 a:hover {
   color: var(--el-dark);
   text-decoration: none;
@@ -106,10 +107,21 @@ code:not(pre code) {
 }
 
 /* --- Cards: colored left borders --- */
-.card-day-job { border-left: 3px solid var(--el-orange) !important; }
-.card-pottery { border-left: 3px solid var(--el-orange) !important; }
-.card-aikido  { border-left: 3px solid var(--el-gray)   !important; }
-.card-brug    { border-left: 3px solid var(--el-amber)  !important; }
+.card-day-job {
+  border-left: 3px solid var(--el-orange) !important;
+}
+
+.card-pottery {
+  border-left: 3px solid var(--el-orange) !important;
+}
+
+.card-aikido {
+  border-left: 3px solid var(--el-gray) !important;
+}
+
+.card-brug {
+  border-left: 3px solid var(--el-amber) !important;
+}
 
 /* --- Cards: horizontal inner layout --- */
 .card-inner {
@@ -223,18 +235,58 @@ blockquote {
   background-color: var(--el-cream);
 }
 
-/* --- About page --- */
-.about-top {
-  grid-template-columns: 1fr 2fr;
+/* ============================================================
+   About page
+   Uses a floated image so the first paragraphs wrap beside the
+   photo, while the later paragraphs expand to the full text width.
+   ============================================================ */
+
+.about-bio {
+  /* No max-width here — let it fill the Quarto content column
+     so that the full-width paragraphs after the float use all
+     available space, matching the width of the photo + text side. */
+  margin: 0 0 1.75rem 0;
 }
 
-.about-photo {
-  width: 100%;
-  max-height: 320px;
+/* Float the photo left so the first paragraphs wrap beside it.
+   Once the text clears the image height, subsequent paragraphs
+   naturally expand to the full content width. */
+.about-bio > .about-photo {
+  float: left;
+  width: 230px;
+  height: 420px;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 15%;
   border-radius: 8px;
   display: block;
+  margin: 0.25rem 2rem 1rem 0;
+}
+
+.about-bio p {
+  font-size: 1rem;
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+
+/* Clear after the bio so the divider and Journal section
+   do not creep up beside the photo. */
+.about-bio::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.about-divider {
+  clear: both;
+  border: none;
+  border-top: 1px solid var(--el-border);
+  margin: 2.5rem 0;
+}
+
+/* Legacy About classes retained harmlessly in case older markup
+   still exists elsewhere. They no longer define the main layout. */
+.about-top {
+  margin-bottom: 1.75rem;
 }
 
 .about-intro-col p,
@@ -244,14 +296,13 @@ blockquote {
   margin-bottom: 1.25rem;
 }
 
-.about-divider {
-  border: none;
-  border-top: 1px solid var(--el-border);
-  margin: 2.5rem 0;
-}
-
+/* --- Responsive behavior --- */
 @media (max-width: 768px) {
-  .about-top {
-    grid-template-columns: 1fr;
+  .about-bio > .about-photo {
+    float: none;
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    margin: 0 0 1.5rem 0;
   }
 }
