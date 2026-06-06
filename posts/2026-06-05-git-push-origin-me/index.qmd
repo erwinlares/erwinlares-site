@@ -1,7 +1,7 @@
 ---
 title: "Git Push Origin Me"
 date: 2026-06-05
-description: "One or two sentences."
+description: "My motivation behind relaunching a persona website"
 categories:
   - journal
   - productivity
@@ -9,10 +9,6 @@ categories:
 status: published
 publish_to:
   - erwinlares
-  - lasrubieraspottery
-  - aikidoofwisconsin
-  - researchci
-  - brug
 ---
 
 My personal website has been quietly embarrassing me since 2021. Not in a dramatic way — it was still up, still rendering — but frozen in time in a way that felt increasingly dishonest. The version of me it described was a dissertator with a vague set of interests and a handful of blog posts from a pandemic year. I've since graduated, changed roles, became a hobby potter, and taken on a fair number of other things the old site didn't know about.

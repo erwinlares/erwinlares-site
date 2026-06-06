@@ -40,7 +40,7 @@ I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a 
         <div class="card-text">
           <h3 class="card-title-text">las rubieras pottery</h3>
           <p class="card-desc-text">las rubieras pottery is functional stoneware made to be held. The name comes from a lush corner of a Venezuelan farm — green against the dry season sun, almost like a mirage.</p>
-          <a href="https://lasrubieraspottery.com" class="card-link-text">Visit the study →</a>
+          <a href="https://lasrubieraspottery.com" class="card-link-text">Visit the studio →</a>
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@ I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a 
         <div class="card-text">
           <h3 class="card-title-text">BRUG</h3>
           <p class="card-desc-text">The Badger R User Group — a community of practice for researchers who code in R at UW-Madison.</p>
-          <a href="brug/" class="card-link-text">Visit BRUG →</a>
+          <a href="https://erwinlares.github.io/the-burrows/" class="card-link-text">Visit BRUG →</a>
         </div>
       </div>
     </div>
