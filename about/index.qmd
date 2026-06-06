@@ -2,11 +2,11 @@
 toc: false
 listing:
   - id: personal-posts
-    contents: "posts"
+    contents: "../posts/*/index.qmd"
     sort: "date desc"
     max-items: 2
     include:
-      categories: ["personal"]
+      categories: "journal"
     type: default
     fields: [title, date, description]
 ---
@@ -38,7 +38,7 @@ listing:
 <hr class="about-divider">
 ```
 
-## From the Journal
+## Journal
 
-::: {#personal-posts}
+::: {#journal-posts}
 :::

@@ -30,7 +30,7 @@ categories:
     - r
 status: published
 publish_to: 
-    brug
+    - brug
 format:
   html:
     toc: true
