@@ -3,8 +3,7 @@ title: "Git Push Origin Me"
 date: 2026-06-05
 description: "One or two sentences."
 categories:
-  - r
-  - personal
+  - journal
   - productivity
   - coding
 status: published
