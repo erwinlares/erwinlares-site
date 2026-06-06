@@ -7,9 +7,12 @@ toc: false
 
 ## Hi, I'm Erwin
 
-Language got me into academia and coffee keeps me there. I'm a linguist, a data scientist, a hobby potter, an aikidoist, and a dog dad. My Ph.D. dissertation was technically about idiomatic phrases — but really more about how we are able to capture nuances even when we are not consciously aware of them.
+Language got me into academia. I have a PhD in linguistics from UW–Madison — my dissertation was about idiomatic phrases, which is a technical way of saying I spent years trying to understand why kick the bucket makes perfect sense to everyone even though it shouldn't. That question hasn't entirely left me.
 
-I work as a Research Data Science Consultant at UW-Madison and help run BRUG, a community of R users working to make research computing more accessible. I'm a humanist: I believe good tools should be in everyone's hands and that fairness matters in how we build them.
+
+These days I work as a Research Data Science Consultant at UW–Madison and help run BRUG, a community of R users in the research computing space. The work is about three things I can't seem to separate: getting data science tools into more researchers' hands, helping them produce work that holds up to scrutiny, and clearing away the small frictions that eat time without adding anything. I'm a humanist, and I think those are ethical goals as much as technical ones.
+
+
 
 :::
 
