@@ -5,12 +5,9 @@ toc: false
 
 ::: {.column-body}
 
-## Hi, I'm Erwin
+Language got me into academia, and I never quite found my way back out. I have a PhD in linguistics from UW–Madison — my dissertation was about idiomatic phrases, which is a technical way of saying I spent years trying to understand why certain phrases make perfect sense to everyone even though they shouldn't. That question hasn't entirely left me, and it turns out it travels well into data science, pottery, and aikido, all of which are also about learning to read signals you were never explicitly taught.
 
-Language got me into academia. I have a PhD in linguistics from UW–Madison — my dissertation was about idiomatic phrases, which is a technical way of saying I spent years trying to understand why kick the bucket makes perfect sense to everyone even though it shouldn't. That question hasn't entirely left me.
-
-
-These days I work as a Research Data Science Consultant at UW–Madison and help run BRUG, a community of R users in the research computing space. The work is about three things I can't seem to separate: getting data science tools into more researchers' hands, helping them produce work that holds up to scrutiny, and clearing away the small frictions that eat time without adding anything. I'm a humanist, and I think those are ethical goals as much as technical ones.
+This site is home base. From here I write about my work as a Research Data Science Consultant at UW–Madison, where I help researchers make their work more reproducible and run BRUG, a community of R users on campus. I also write about what happens at the wheel, on the mat, and in the spaces between — the stuff that doesn't fit a job title but shapes how I think about everything else.
 
 
 

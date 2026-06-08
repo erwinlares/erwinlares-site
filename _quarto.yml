@@ -24,6 +24,7 @@ website:
 
   page-footer:
     left: "© Erwin Lares"
+    center: "Built with Quarto, deployed with Netlify, version-controlled on GitHub"
     right:
       - icon: github
         href: https://github.com/erwinlares
