@@ -26,7 +26,7 @@ This site is home base. From here I write about my work as a Research Data Scien
         <div class="card-text">
           <h3 class="card-title-text">Day Job</h3>
           <p class="card-desc-text">Research Data Science Consultant at UW-Madison. I work with researchers on the tools and strategies that make their work more reproducible, shareable, and visible.</p>
-          <a href="day-job/" class="card-link-text">Learn more →</a>
+          <a href="https://it.wisc.edu/about/division-of-information-technology/research-cyberinfrastructure/" class="card-link-text">Learn more →</a>
         </div>
       </div>
     </div>

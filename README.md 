@@ -1,0 +1,221 @@
+# erwinlares-site
+
+Personal website for Erwin Lares, built with Quarto and deployed to Netlify via GitHub. The site lives at [erwinlares.com](https://erwinlares.com) and serves as the canonical hub in a hub-and-spoke publishing system — content written here propagates outward to a set of spoke platforms through an R-based dispatch layer.
+
+---
+
+## Architecture
+
+The site is a static Quarto website, version-controlled in this repo (`erwinlares/erwinlares-site`) and deployed automatically by Netlify on every push to `main`. The hub-and-spoke model works as follows: every post lives here first, tagged and routed in its YAML front matter. Running `publish()` from the R console dispatches each post to whichever spoke platforms its front matter specifies — no manual copying, no per-platform reformatting.
+
+The spokes are:
+
+| Platform | URL | Dispatch method |
+|---|---|---|
+| erwinlares.com | erwinlares.com | git push → Netlify rebuild |
+| BRUG (the-burrows) | github.com/erwinlares/the-burrows | GitHub Contents API |
+| Las Rubieras Pottery | lasrubieraspottery.com | Shopify API (stub) |
+| Aikido of Wisconsin | aikidoofwisconsin.com | — (Squarespace ruled out; migration pending) |
+| RCI / UW–Madison | researchci.doit.wisc.edu | WordPress REST API (stub) |
+
+Squarespace has no content-posting endpoints — its API is commerce-only — so it is permanently ruled out as a dispatch target. The aikido site is being migrated to its own Quarto + Netlify stack.
+
+---
+
+## Stack
+
+- **Quarto** — site framework and rendering
+- **R** — dispatch layer, `init_post()`, post-render hooks
+- **GitHub** — version control; also the delivery mechanism for BRUG posts via the Contents API
+- **Netlify** — hosting and continuous deployment
+- **httr2** — HTTP requests in the dispatch layer
+- **Bootswatch Lux** — base theme
+
+The build is configured in `netlify.toml`. Netlify requires a custom `install_quarto.sh` script (see Troubleshooting).
+
+---
+
+## Repository layout
+
+```
+erwinlares-site/
+├── _quarto.yml             # site-wide configuration
+├── netlify.toml            # Netlify build settings
+├── install_quarto.sh       # Quarto install script for Netlify CI
+├── .Rprofile               # sources R/init-post.R on project open
+├── index.qmd               # landing page
+├── about/
+│   └── index.qmd
+├── cv/
+│   └── index.qmd
+├── posts/
+│   └── YYYY-MM-DD-slug/
+│       └── index.qmd
+├── R/
+│   ├── init-post.R         # init_post() helper
+│   ├── publish.R           # publish() orchestrator
+│   ├── dispatch-erwinlares.R
+│   ├── dispatch-brug.R
+│   ├── dispatch-shopify.R  # stub
+│   └── dispatch-wordpress.R # stub
+└── dispatch_log.csv        # per-post per-platform dispatch history
+```
+
+File naming convention: dashes in filenames (`dispatch-brug.R`), underscores in function names (`dispatch_brug()`).
+
+---
+
+## Design system
+
+| Element | Value |
+|---|---|
+| Theme | Bootswatch Lux |
+| Burnt orange | `#C4622D` |
+| Olive | `#5C6B3A` |
+| Warm gray | `#6B6860` |
+| Amber | `#9B7B3A` |
+| Cream | `#FDFAF7` |
+| Deep brown | `#2C2826` |
+| Heading font | Cormorant Garamond |
+| Body font | Jost |
+| Code font | JetBrains Mono |
+| Favicon | Hexagonal SVG, `əl` monogram — schwa in burnt orange, l in olive |
+
+The schwa is linguist-coded and intentional. The favicon file is `favicon.svg` at the project root; `_quarto.yml` references it via `website: favicon: favicon.svg`.
+
+---
+
+## Credentials and environment setup
+
+All platform credentials live in `.Renviron` at the project root and are never committed to version control. `.Renviron` is listed in `.gitignore`.
+
+On a fresh clone or new machine, create `.Renviron` and populate it with:
+
+```
+GITHUB_PAT_BRUG=ghp_...
+```
+
+`GITHUB_PAT_BRUG` is a fine-grained GitHub personal access token scoped to the `the-burrows` repo with **Contents: Read and Write** permission only. No other scopes are needed. Generate or regenerate it at GitHub → Settings → Developer settings → Fine-grained tokens.
+
+As additional dispatch stubs are implemented, their credentials will live here too (Shopify API key, WordPress application password, etc.). The pattern is always the same: token in `.Renviron`, read in the dispatch function via `Sys.getenv()`, never hardcoded.
+
+---
+
+## Post anatomy and YAML front matter
+
+Every post is an `index.qmd` file inside a dated directory under `posts/`. The canonical front matter skeleton:
+
+```yaml
+---
+title: "Post Title"
+date: 2026-06-05
+description: "One or two sentences."
+categories:
+  - data-science
+  - r
+status: draft
+publish_to:
+  - erwinlares
+  - brug
+---
+```
+
+**`status`** is the safety gate. The dispatch layer ignores any post where `status` is not `published`. Always start with `draft`; change to `published` only when the post is ready to go.
+
+**`publish_to`** controls routing. List only the platforms this particular post should reach. Valid values are `erwinlares`, `brug`, `lasrubieraspottery`, and `researchci`. Adding a new platform to an existing post and re-running `publish()` will dispatch only to the new platform — `dispatch_log.csv` prevents re-sending to platforms that have already received the post.
+
+**`categories`** drives taxonomy and tag filtering on the site. The canonical tag set is:
+
+`personal`, `data-science`, `linguistics`, `pottery`, `aikido`, `r`, `brug`, `reproducibility`, `productivity`, `coding`, `journal`
+
+The `journal` tag carries special behavior: it populates the dynamic "From the Journal" section on the About page via a Quarto listing filter. Any post tagged `journal` will appear there automatically.
+
+---
+
+## Workflows
+
+### Starting a new post
+
+`init_post()` is available in the R console whenever the project is open (sourced automatically via `.Rprofile`). Call it with a slug, a hyphenated title, or a plain string:
+
+```r
+init_post("tracking-kiln-firings-with-r")
+init_post("tracking kiln firings with R")
+```
+
+This creates `posts/YYYY-MM-DD-tracking-kiln-firings-with-r/index.qmd` with the canonical YAML skeleton pre-populated, and opens the file in the RStudio editor. If a directory for that slug and date already exists, `init_post()` stops with a warning rather than overwriting.
+
+Write the post. When it is ready, change `status: draft` to `status: published`, confirm the `publish_to` list, then run:
+
+```r
+publish()
+```
+
+That's it. `publish()` handles git add/commit/push for the hub (triggering a Netlify rebuild) and API calls for each spoke platform listed in `publish_to`.
+
+### Editing an existing post
+
+Edit the `.qmd` file directly, then run `publish()`. Because `dispatch_log.csv` records prior dispatches, updates to already-dispatched posts will be re-sent to the same platforms. (This is the intended behavior — edits propagate.)
+
+### Structural changes (layout, CSS, `_quarto.yml`, new pages)
+
+These bypass the dispatch layer entirely. Edit the relevant files, then push manually:
+
+```bash
+git add .
+git commit -m "describe the change"
+git push
+```
+
+Netlify detects the push and rebuilds automatically.
+
+### Adding a new spoke platform later
+
+1. Implement the dispatch stub in `R/dispatch-platform.R`.
+2. Add the platform credential to `.Renviron`.
+3. Add the platform name to `publish_to` in whichever posts should reach it.
+4. Run `publish()` — only the new platform is dispatched for each post; existing entries in `dispatch_log.csv` are respected.
+
+---
+
+## Dispatch layer status
+
+| Function | Status | Notes |
+|---|---|---|
+| `dispatch_erwinlares()` | ✅ Live | git add/commit/push; no PAT needed; idempotent |
+| `dispatch_brug()` | ✅ Live | GitHub Contents API via httr2; `GITHUB_PAT_BRUG` in `.Renviron` |
+| `dispatch_shopify()` | 🔲 Stub | Shopify Admin API; credential TBD |
+| `dispatch_wordpress()` | 🔲 Stub | WordPress REST API; covers `researchci.doit.wisc.edu`; waiting on work migration |
+| Squarespace | ⛔ Ruled out | Commerce-only API; no content endpoints exist |
+
+The `dispatch_log.csv` schema is: `post_path`, `platform`, `dispatched_at`. One row per post per platform.
+
+---
+
+## Roadmap
+
+In rough priority order:
+
+1. **aikidoofwisconsin.com migration** — full rebuild from Squarespace to Quarto + GitHub + Netlify in a separate repo; deadline July 25 (Squarespace renewal)
+2. **CV page** — static page on erwinlares.com serving the latest resume PDF
+3. **Resume post-render hook** — R package post-render hook that PUTs the rendered PDF into this repo via the GitHub Contents API, triggering a Netlify rebuild; same pattern as `dispatch_brug()`
+4. **`dispatch_wordpress()`** — waiting on a separate work infrastructure migration before proceeding
+5. **`retract(post_path, platform)`** — function to pull a post down from a given spoke platform
+
+---
+
+## Troubleshooting / known quirks
+
+**Netlify won't install Quarto via env var alone.** Setting `QUARTO_VERSION` in the Netlify environment is not sufficient — Netlify will not install Quarto from it. The repo includes `install_quarto.sh`, which downloads and extracts the Quarto binary to `$HOME` (not `/opt`, which requires permissions the build environment doesn't have). This script must be present and referenced in `netlify.toml`.
+
+**CSS floats are unreliable in Quarto.** Quarto's layout system interferes with float-based CSS. If you need a photo or element to sit alongside text, use CSS Grid explicitly. The About page photo layout uses two HTML blocks — a grid div for the image-plus-first-paragraphs section, and a separate full-width div for the remainder — with sizing handled via inline styles to prevent Quarto from overriding them.
+
+**Raw HTML inside Quarto div fences requires a raw block.** HTML inside `:::{}` divs must be wrapped in ` ```{=html} ` blocks, not written as bare HTML. Bare HTML inside a div fence will not render.
+
+**Quarto listing `contents` needs a glob pattern for nested posts.** The listing that drives the journal feed uses `contents: ../posts/*/index.qmd`, not just `contents: ../posts`. The simpler path does not recurse into subdirectories. Similarly, the category filter requires a plain string (`categories: "journal"`), not array syntax.
+
+**Quarto rewrites internal `.qmd` links to `.html` at render time.** Use `.qmd` paths when linking between pages in source — Quarto handles the `.html` translation. Writing `.html` paths in source will produce broken links in the editor and may cause issues if the rendering target changes.
+
+**PR templates only auto-load from the root `.github/` directory.** The pull request template must live at `.github/pull_request_template.md` directly, not in any subfolder. GitHub will not auto-load it from a subdirectory.
+
+**Favicons are aggressively cached.** After updating `favicon.svg`, do a hard browser refresh (`Cmd+Shift+R` / `Ctrl+Shift+R`) before concluding the favicon isn't working.

@@ -3,8 +3,8 @@ title: Split, Apply, Combine
 subtitle: Running the Same Analysis Across Data Subsets
 author:
 - name: Erwin Lares
-  affiliation: Research Cyberinfrastructure (RCI), Division of Information Technology,
-    UW-Madison
+  affiliation: "Research Cyberinfrastructure (RCI), Division of Information Technology,
+    UW-Madison"
   orcid: 0000-0002-3284-828X
   email: erwin.lares@wisc.edu
 date: 05-11-2026
