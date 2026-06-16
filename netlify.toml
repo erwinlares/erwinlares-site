@@ -1,5 +1,5 @@
 [build]
-  command = "bash install_r.sh && bash install_quarto.sh"
+  command = "bash install_r.sh && Rscript -e \"renv::restore()\" && bash install_quarto.sh"
   publish = "_site"
 
 [build.environment]
