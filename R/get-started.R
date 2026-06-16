@@ -13,11 +13,18 @@ NEW POST
   2. Write the post
   3. Set status: published in YAML front matter
   4. Confirm publish_to list
+  ⚠  Any YAML change (including status: published) invalidates
+     the freeze cache — re-render before publishing:
+     quarto render posts/your-post-slug/index.qmd
+     then commit the updated _freeze files
   5. publish()
 
 EDIT AN EXISTING POST
   1. Edit the .qmd file directly
-  2. publish()
+  2. If you changed the YAML front matter, re-render first:
+     quarto render posts/your-post-slug/index.qmd
+     then commit the updated _freeze files
+  3. publish()
 
 STRUCTURAL CHANGES (layout, CSS, _quarto.yml, new pages)
   1. Edit the relevant files
