@@ -82,7 +82,7 @@ If the report and the script are both derived from the same .qmd, they cannot dr
 
 The first function is `create_qmd()`. It scaffolds a new Quarto document from a template that is oriented from the start toward portability -- toward being a maintained source rather than a one-off report.
 
-```r
+```{r}
 #| eval: false
 library(toolero)
 
@@ -124,7 +124,7 @@ R code does not know, by default, how it is being run. This sounds like a minor 
 
 `detect_execution_context()` solves this correctly. It returns one of three strings -- `"interactive"`, `"quarto"`, or `"rscript"` -- and that single value is enough to drive a `switch` block that resolves inputs correctly for each context:
 
-```r
+```{r}
 #| eval: false
 context <- detect_execution_context()
 
@@ -154,7 +154,7 @@ project:
 
 And `R/purl.R`, which that hook calls, does this:
 
-```r
+```{r}
 #| eval: false
 
 qmd_files <- fs::dir_ls(getwd(), glob = "*.qmd")
