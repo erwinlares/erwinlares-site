@@ -3,3 +3,4 @@
 .Renviron
 
 **/*.quarto_ipynb
+dispatch_log.csv

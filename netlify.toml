@@ -1,5 +1,5 @@
 [build]
-  command = "bash install_quarto.sh"
+  command = "bash install_quarto.sh && bash install_r.sh"
   publish = "_site"
 
 [build.environment]
