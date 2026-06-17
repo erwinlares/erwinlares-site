@@ -1,0 +1,8 @@
+---
+title: "CV"
+toc: false
+---
+
+<a href="CV.pdf" download class="btn btn-outline-secondary">
+  <i class="fa-solid fa-file-pdf"></i> Download a copy of Erwin Lares' CV
+</a>
