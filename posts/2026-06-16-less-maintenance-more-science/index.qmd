@@ -1,7 +1,8 @@
 ---
 title: "less Maintenance, more Science"
 subtitle: "Reproducibility by design with toolero"
-description: "One or two sentences."
+description: "Code drift — the quiet divergence between what you report and what you actually ran — is one of reproducibility's most common and least visible failure modes. This post introduces a workflow built on three toolero functions that address drift structurally: a scaffold that doubles as a maintained source, a context-detection utility that replaces informal path patches, and a post-render hook that derives the submission script automatically."
+abstract: "Reproducible research workflows routinely pass through three distinct execution contexts — interactive RStudio sessions, Quarto renders, and standalone Rscript calls for cluster submission — each with its own conventions for working directories and parameter passing. The typical response is informal management: patched paths, commented-out lines, separate entry points. These local fixes are individually reasonable and collectively drift-prone. This post argues for a more principled alternative: treating the Quarto document as a single maintained source from which both the rendered report and the cluster submission script are derived. Three functions from the toolero package support this workflow. create_qmd() scaffolds a project with author metadata, a context-aware input resolution block, and a post-render hook already registered. detect_execution_context() replaces ad hoc branching with an explicit three-way switch that correctly distinguishes interactive, Quarto, and Rscript execution. The post-render hook calls knitr::purl() automatically, so the submission script is emitted as a side effect of rendering rather than maintained separately. Together, these three pieces make divergence structurally difficult rather than merely inadvisable."
 author:
   - name: Erwin Lares
     affiliation: "Research Cyberinfrastructure (RCI), Division of Information Technology,
@@ -33,6 +34,7 @@ execute:
   error: false
 ---
 
+___
 Reproducibility is, at its core, a commitment. A commitment to your future self, to those who will need to re-run the analysis six months from now when a reviewer asks a question you did not anticipate. A commitment to collaborators, who should be able to pick up where you left off. A commitment to the scientific record, which is only as trustworthy as the code behind it.
 
 That commitment rests on a quiet assumption: that the code remains stable across time and across contexts. It is worth pausing on that word, *contexts*, because it is where most reproducibility problems actually enter -- not in a single dramatic failure, but incrementally, through a process I have started thinking of as *code drift*.
