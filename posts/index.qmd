@@ -9,3 +9,5 @@ listing:
   filter-ui: true
   sort-ui: false
 ---
+
+I write here about research data science, reproducibility, and the tools I build and use. Posts range from technical walkthroughs to more reflective pieces about the work itself.

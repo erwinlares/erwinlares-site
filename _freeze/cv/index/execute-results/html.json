@@ -1,0 +1,15 @@
+{
+  "hash": "63c9c3909f6e90946889af3fc7776c4d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"CV\"\ntoc: false\nengine: knitr\ninclude-in-header:\n  text: |\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\n---\n\nMy CV covers my academic background in linguistics, my work in research\ndata science at UW–Madison, and the tools and projects I've built along\nthe way. Last updated June 2026.\n\n<div style=\"text-align: center; margin-top: 2rem;\">\n  <a href=\"erwinlares-cv.pdf\" download class=\"btn btn-outline-secondary\">\n    <i class=\"fa-solid fa-file-pdf\"></i> Download a copy of Erwin Lares' CV\n  </a>\n</div>\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
