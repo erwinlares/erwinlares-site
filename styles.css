@@ -222,3 +222,8 @@ blockquote {
   color: var(--el-gray);
   background-color: var(--el-cream);
 }
+
+/* Post titles in listing page */
+.quarto-listing-default .body h3 a.no-external {
+  color: #C5050C;
+}
