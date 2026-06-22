@@ -43,6 +43,8 @@ That commitment rests on a quiet assumption: that the code remains stable across
 
 Here is how it usually goes. You write an analysis interactively in RStudio, reading your data from `data-raw/penguins.csv`. It works. A few weeks later, you fold that analysis into a Quarto document. The path breaks -- `knitr` uses the document directory as the working directory, not the project root -- so you patch it. Then you want to run the same logic as a standalone script, maybe to test it before submitting it to a computing cluster. The path breaks again, differently, and you patch it again.
 
+![One source of truth prevents code drift and produces consistent, reproducible artifacts.](less-maintenance-more-science.png)
+
 You now have three versions of the same input line:
 
 ```
