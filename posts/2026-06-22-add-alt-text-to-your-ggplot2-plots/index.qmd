@@ -17,7 +17,7 @@ categories:
   - brug
   - reproducibility
   - accessibility
-status: draft
+status: published
 publish_to:
   - erwinlares
   - brug
