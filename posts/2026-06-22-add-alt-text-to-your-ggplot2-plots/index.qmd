@@ -1,7 +1,7 @@
 ---
 title: "Add Alt-Text to your ggplot2 Plots"
 subtitle: ""
-description: "One or two sentences."
+description: "You can make your plots more accessible by adding alt-text via the code block option `#| fig-alt:`"
 abstract: ""
 author:
 - name: Erwin Lares
