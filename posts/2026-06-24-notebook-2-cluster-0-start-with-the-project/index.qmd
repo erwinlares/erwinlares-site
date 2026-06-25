@@ -46,10 +46,14 @@ execute:
   message: false
   error: false
 engine: knitr
+margin-header: |
+  <img src="notebook-cluster.png" width="140px" style="display:block; margin: 0 auto 1rem auto;"/>
 ---
 
 
 ## The long game
+
+
 
 This series is about moving a research coding project from a local machine to
 high-throughput computing. The destination matters: eventually, we want to run
