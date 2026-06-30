@@ -28,11 +28,15 @@ read_front_matter <- function(path) {
 load_dispatch_log <- function() {
   log_path <- "dispatch_log.csv"
   if (file.exists(log_path)) {
-    read.csv(log_path, stringsAsFactors = FALSE)
+    log <- read.csv(log_path, stringsAsFactors = FALSE)
+    # Back-compat: older logs predate the section column
+    if (!"section" %in% names(log)) log$section <- NA_character_
+    log
   } else {
     data.frame(
       post_path     = character(),
       platform      = character(),
+      section       = character(),
       dispatched_at = character(),
       status        = character(),
       message       = character(),
@@ -41,10 +45,11 @@ load_dispatch_log <- function() {
   }
 }
 
-log_dispatch <- function(post_path, platform, status = "success", msg = "") {
+log_dispatch <- function(post_path, platform, section = NA_character_, status = "success", msg = "") {
   entry <- data.frame(
     post_path     = post_path,
     platform      = platform,
+    section       = section,
     dispatched_at = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
     status        = status,
     message       = msg,
@@ -58,6 +63,17 @@ already_dispatched <- function(log, post_path, platform) {
   nrow(log[log$post_path == post_path &
              log$platform  == platform  &
              log$status    == "success", ]) > 0
+}
+
+# Looks up the section a post most recently landed in for a given platform.
+# Returns NA if there's no successful log entry (e.g. log predates the
+# section column, or this post/platform pair was never dispatched).
+get_dispatched_section <- function(log, post_path, platform) {
+  matches <- log[log$post_path == post_path &
+                   log$platform  == platform  &
+                   log$status    == "success", ]
+  if (nrow(matches) == 0) return(NA_character_)
+  matches$section[nrow(matches)]  # most recent match
 }
 
 
@@ -151,18 +167,22 @@ publish <- function() {
       }
       
       tryCatch({
-        switch(platform,
-               erwinlares         = dispatch_erwinlares(post$path, post),
-               brug               = dispatch_brug(post$path, post),
-               lasrubieraspottery = dispatch_shopify(post$path, post),
-               aikidoofwisconsin  = dispatch_squarespace(post$path, post),
-               researchci         = dispatch_wordpress(post$path, post),
-               message("Unknown platform: ", platform)
+        result <- switch(platform,
+                         erwinlares         = dispatch_erwinlares(post$path, post),
+                         brug               = dispatch_brug(post$path, post),
+                         lasrubieraspottery = dispatch_shopify(post$path, post),
+                         aikidoofwisconsin  = dispatch_squarespace(post$path, post),
+                         researchci         = dispatch_wordpress(post$path, post),
+                         message("Unknown platform: ", platform)
         )
-        log_dispatch(post$path, platform, "success")
+        # dispatch_brug() returns the section it routed to; other
+        # dispatchers don't have a section concept and return TRUE/NULL,
+        # which is not a string, so section stays NA for them.
+        section <- if (is.character(result)) result else NA_character_
+        log_dispatch(post$path, platform, section, "success")
         
       }, error = function(e) {
-        log_dispatch(post$path, platform, "error", conditionMessage(e))
+        log_dispatch(post$path, platform, NA_character_, "error", conditionMessage(e))
         message("\u2717 Failed: ", post$title, " \u2192 ", platform,
                 "\n  ", conditionMessage(e))
       })
