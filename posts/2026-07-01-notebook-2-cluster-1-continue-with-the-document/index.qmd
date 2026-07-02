@@ -35,7 +35,7 @@ categories:
   - portable code
   - data subsetting 
   - toolero
-status: draft
+status: published
 publish_to:
   - erwinlares
   - brug
@@ -46,8 +46,8 @@ format:
     toc-title: Contents
     number-sections: true
     embed-resources: false
-    css: assets/styles.css
-    include-before-body: assets/header.html
+    css: ../styles.css
+    include-before-body: ../header.html
 execute:
   include: true
   echo: true
@@ -58,45 +58,6 @@ margin-header: |
   <img src="notebook-cluster.png" width="140px" style="display:block; margin: 0 auto 1rem auto;"/>
 params:
   data_file: "data.csv"
----
-
----
-title: "From the Notebook to the Cluster"
-subtitle: "Part 1: Start with the Document"
-author: "Erwin Lares, Research Cyberinfrastructure (RCI)"
-affiliation: "Research Cyberinfrastructure at DoIT"
-format:
-  html:
-    code-fold: true
-    code-summary: "Show the code"
-    toc: true
-    toc-depth: 2
-    toc-title: "Contents"
-    theme: cosmo
-    css: assets/styles.css
-    include-before-body: assets/header.html
-description: >
-  A practical guide to writing reproducible R analyses using Quarto. Covers
-  how to organize a research project, resolve inputs across interactive,
-  Quarto, and command-line execution contexts, and automatically derive a
-  portable R script from a human-readable document. Part 1 of the "From the
-  Notebook to the Cluster" series.
-categories:
-  - Quarto
-  - R
-  - reproducible research
-  - research workflow
-  - command line
-  - Rscript
-  - CHTC
-  - portable code
-  - data splitting
-knitr:
-  opts_chunk: 
-    message: false
-    warning: false
-params:
-  data_file: "data/data.csv"
 ---
 
 
