@@ -1,36 +1,37 @@
 init_post <- function(slug, yaml_data = NULL) {
-  
   # Detect input style and derive directory slug + YAML title accordingly
-  is_code  <- grepl("^`.*`$", slug)
+  is_code <- grepl("^`.*`$", slug)
   is_words <- grepl(" ", slug) && !is_code
-  
+
   if (is_code) {
-    raw      <- gsub("^`|`$", "", slug)
+    raw <- gsub("^`|`$", "", slug)
     dir_slug <- gsub(" ", "-", raw)
-    title    <- paste0("`", raw, "`")
-    
+    title <- paste0("`", raw, "`")
   } else if (is_words) {
     dir_slug <- gsub(" ", "-", tolower(slug))
-    title    <- tools::toTitleCase(slug)
-    
+    title <- tools::toTitleCase(slug)
   } else {
     dir_slug <- slug
-    title    <- tools::toTitleCase(gsub("-", " ", slug))
+    title <- tools::toTitleCase(gsub("-", " ", slug))
   }
-  
+
   # Build paths
-  date      <- format(Sys.Date(), "%Y-%m-%d")
-  dir_path  <- file.path("posts", paste0(date, "-", dir_slug))
+  date <- format(Sys.Date(), "%Y-%m-%d")
+  dir_path <- file.path("posts", paste0(date, "-", dir_slug))
   post_path <- file.path(dir_path, "index.qmd")
-  
+
   # Stop if directory already exists
   if (dir.exists(dir_path)) {
     stop("Directory already exists: ", dir_path, call. = FALSE)
   }
-  
+
   # Resolve author block
   if (!is.null(yaml_data)) {
-    yaml_path <- if (grepl("\\.ya?ml$", yaml_data)) yaml_data else paste0(yaml_data, ".yml")
+    yaml_path <- if (grepl("\\.ya?ml$", yaml_data)) {
+      yaml_data
+    } else {
+      paste0(yaml_data, ".yml")
+    }
     if (!file.exists(yaml_path)) {
       stop("yaml_data file not found: ", yaml_path, call. = FALSE)
     }
@@ -48,19 +49,23 @@ init_post <- function(slug, yaml_data = NULL) {
       "    email: \"\"\n"
     )
   }
-  
+
   # Create directory
   dir.create(dir_path, recursive = TRUE)
-  
+
   # Build YAML template
   template <- paste0(
     "---\n",
-    'title: "', title, '"\n',
+    'title: "',
+    title,
+    '"\n',
     'subtitle: ""\n',
     'description: "One or two sentences."\n',
     'abstract: ""\n',
     author_block,
-    "date: ", date, "\n",
+    "date: ",
+    date,
+    "\n",
     "date-modified: last-modified\n",
     "categories:\n",
     "  - data-science\n",
@@ -96,13 +101,13 @@ init_post <- function(slug, yaml_data = NULL) {
     "---\n",
     "\n"
   )
-  
+
   # Write index.qmd
   writeLines(template, post_path)
-  
+
   # Open in RStudio editor
   rstudioapi::navigateToFile(post_path)
-  
+
   message("Created: ", post_path)
   invisible(post_path)
 }

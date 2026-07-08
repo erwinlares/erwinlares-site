@@ -3,7 +3,8 @@
 # Sourced automatically via .Rprofile when the project is opened.
 
 get_started <- function() {
-  cat("
+  cat(
+    "
 =======================================================
   erwinlares-site — quick reference
 =======================================================
@@ -26,18 +27,31 @@ EDIT AN EXISTING POST
      then commit the updated _freeze files
   3. publish()
 
-RETRACT A POST (GitHub-backed platforms only — currently: brug)
-  Use when a post landed in the wrong place, or needs pulling.
-     retract_gh(
+RETRACT A POST
+  Use when a post landed in the wrong place, needs pulling from a
+  spoke, or needs pulling off erwinlares.com entirely.
+     retract(
        post_path = \"posts/your-post-slug/index.qmd\",
-       owner     = \"erwinlares\",
-       repo      = \"the-burrows\"
+       platform  = \"brug\"
      )
-  section is looked up automatically from dispatch_log.csv.
-  Pass section explicitly only for posts dispatched before the
-  log tracked it: section = \"blog\" or section = \"resources\"
-  Clears the matching dispatch_log.csv row, so the next
-  publish() redispatches the post (e.g. to the right section).
+  platform is one of: erwinlares, brug, lasrubieraspottery,
+  aikidoofwisconsin, researchci (the last three are stubs for now).
+  Call it once per platform if a post needs pulling from more than
+  one place.
+  Clears the matching dispatch_log.csv row, so the next publish()
+  redispatches the post (e.g. to the right section) if it's still
+  listed in publish_to.
+
+  Platform-specific functions (retract_erwinlares(), retract_gh(),
+  etc.) can be called directly, but skip the dispatch_log.csv
+  clearing that retract() handles for you — prefer retract()
+  unless you have a specific reason not to.
+
+  retract_gh() (called for platform = \"brug\") looks up section
+  automatically from dispatch_log.csv. Pass section explicitly only
+  for posts dispatched before the log tracked it:
+     retract_gh(post_path, owner = \"erwinlares\", repo = \"the-burrows\",
+                section = \"blog\")
 
 STRUCTURAL CHANGES (layout, CSS, _quarto.yml, new pages)
   1. Edit the relevant files
@@ -56,5 +70,6 @@ DISPATCH STATUS
   squarespace  ✗ ruled out (commerce-only API)
 
 =======================================================
-")
+"
+  )
 }
