@@ -8,6 +8,16 @@
 # once dispatch-caow.R needed the same two functions.
 # ============================================================
 
+# NOTE: this list is currently boolean-free by construction (title,
+# author, date, categories, description, engine — all strings/lists).
+# That matters because yaml::as.yaml() dumps R logicals as yes/no by
+# default, not true/false, and Quarto's strict YAML 1.2 parser rejects
+# yes/no outright — see the CAOW build failure this caused in
+# dispatch-caow.R (2026-07-14). If a logical field is ever added to what
+# this function keeps, apply the same fix used there: pass
+# handlers = list(logical = function(x) { r <- ifelse(x, "true", "false");
+# class(r) <- "verbatim"; r }) to the as.yaml() call in
+# make_cleaned_post_text() below.
 strip_front_matter_brug <- function(fm) {
   clean <- list()
   if (!is.null(fm$title)) {

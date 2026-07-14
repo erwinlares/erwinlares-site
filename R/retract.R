@@ -74,6 +74,44 @@ retract <- function(post_path, platform) {
 }
 
 
+# Removes a post's directory from erwinlares-site itself via git — the
+# retraction counterpart to dispatch_erwinlares() in publish.R, using the
+# same local git credentials (no PAT needed).
+#
+# gert::git_rm() stages the deletion AND removes the files from disk in
+# one step, mirroring how gert::git_add() is used in dispatch_erwinlares().
+# Idempotent the same way that function is: if the directory's already
+# gone, or nothing ends up staged, this says so and returns without an
+# empty commit rather than erroring.
+retract_erwinlares <- function(post_path) {
+  post_dir <- dirname(post_path)
+  post_dir_name <- basename(post_dir)
+  
+  if (!dir.exists(post_dir)) {
+    message(
+      "erwinlares: ",
+      post_dir_name,
+      " already absent locally, nothing to retract."
+    )
+    return(invisible(TRUE))
+  }
+  
+  gert::git_rm(post_dir)
+  staged <- gert::git_status()
+  
+  if (nrow(staged[staged$staged, ]) == 0) {
+    message("erwinlares: nothing staged for ", post_dir_name, ".")
+    return(invisible(TRUE))
+  }
+  
+  gert::git_commit(paste0("retract: ", post_dir_name))
+  gert::git_push(verbose = FALSE)
+  
+  message("✓ Retracted from erwinlares.com: ", post_dir_name)
+  invisible(TRUE)
+}
+
+
 # Removes a previously-dispatched post from a GitHub-hosted destination.
 # Mirrors the local source_files list rather than discovering remote folder
 # contents — this assumes local and remote stayed in sync, which holds as
@@ -150,4 +188,27 @@ retract_gh <- function(
     post_dir_name
   )
   invisible(TRUE)
+}
+
+
+# --- Stub retractors: mirror the dispatch_*() stubs in publish.R --------
+# These exist so retract() never fails with "could not find function" for
+# a platform that's a legitimate switch case but not yet implemented —
+# same reasoning as dispatch_shopify()/dispatch_wordpress() being real
+# (if empty) functions rather than missing ones.
+
+retract_shopify <- function(post_path) {
+  message(
+    "[STUB] Shopify retraction not yet implemented: ",
+    basename(dirname(post_path))
+  )
+  invisible(NULL)
+}
+
+retract_wordpress <- function(post_path) {
+  message(
+    "[STUB] WordPress retraction not yet implemented: ",
+    basename(dirname(post_path))
+  )
+  invisible(NULL)
 }

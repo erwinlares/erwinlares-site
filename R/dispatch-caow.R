@@ -47,7 +47,26 @@ make_prepared_post_text <- function(source_path, prepared_fm) {
     return(paste(lines, collapse = "\n"))
   }
   content <- lines[(delimiters[2] + 1):length(lines)]
-  yaml_text <- trimws(yaml::as.yaml(prepared_fm, indent = 2), which = "right")
+  
+  # yaml::as.yaml() defaults to dumping logicals as YAML 1.1's yes/no,
+  # not true/false. Quarto parses YAML 1.2 strictly and rejects yes/no
+  # outright, so any execute:/format:html: boolean in the source front
+  # matter (echo, toc, number-sections, etc.) would otherwise break the
+  # CAOW build the moment a post carrying one got dispatched there.
+  yaml_text <- trimws(
+    yaml::as.yaml(
+      prepared_fm,
+      indent = 2,
+      handlers = list(
+        logical = function(x) {
+          result <- ifelse(x, "true", "false")
+          class(result) <- "verbatim"
+          result
+        }
+      )
+    ),
+    which = "right"
+  )
   paste(c("---", yaml_text, "---", content), collapse = "\n")
 }
 
