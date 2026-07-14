@@ -34,8 +34,8 @@ RETRACT A POST
        post_path = \"posts/your-post-slug/index.qmd\",
        platform  = \"brug\"
      )
-  platform is one of: erwinlares, brug, lasrubieraspottery,
-  aikidoofwisconsin, researchci (the last three are stubs for now).
+  platform is one of: erwinlares, brug, caow, lasrubieraspottery,
+  researchci (the last two are stubs for now).
   Call it once per platform if a post needs pulling from more than
   one place.
   Clears the matching dispatch_log.csv row, so the next publish()
@@ -47,15 +47,20 @@ RETRACT A POST
   clearing that retract() handles for you — prefer retract()
   unless you have a specific reason not to.
 
-  retract_gh() (called for platform = \"brug\") looks up section
-  automatically from dispatch_log.csv. Pass section explicitly only
-  for posts dispatched before the log tracked it:
+  retract_gh() (called for platform = \"brug\" or \"caow\") looks up
+  section automatically from dispatch_log.csv, and reads the right
+  credential from platform too (GITHUB_PAT_BRUG / GITHUB_PAT_CAOW).
+  Pass section explicitly only for posts dispatched before the log
+  tracked it:
      retract_gh(post_path, owner = \"erwinlares\", repo = \"the-burrows\",
-                section = \"blog\")
+                section = \"blog\", platform = \"brug\")
 
 STRUCTURAL CHANGES (layout, CSS, _quarto.yml, new pages)
   1. Edit the relevant files
   2. git add . && git commit -m \"describe change\" && git push
+  ⚠  pre-commit hook checks any staged posts/*/index.qmd for
+     \"erwinlares\" in publish_to before allowing the commit —
+     install once per clone: git config core.hooksPath .githooks
 
 TAGS WITH SPECIAL BEHAVIOR
   journal                → appears in \"From the Journal\" on About
@@ -65,9 +70,9 @@ TAGS WITH SPECIAL BEHAVIOR
 DISPATCH STATUS
   erwinlares   ✔ live    (git push → Netlify)
   brug         ✔ live    (GitHub Contents API)
+  caow         ✔ live    (GitHub Contents API)
   shopify      ○ stub
   wordpress    ○ stub    (waiting on work migration)
-  squarespace  ✗ ruled out (commerce-only API)
 
 =======================================================
 "

@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# ============================================================
+# pre-commit — guards against spoke-only posts leaking into
+# erwinlares.com's own build.
+#
+# Why: a post whose publish_to omits "erwinlares" (e.g. a
+# caow-only post) is never pushed to erwinlares-site's remote by
+# publish() — dispatch_erwinlares() is simply never called for it.
+# But the file still sits locally in posts/, and Netlify renders
+# whatever is committed to main regardless of dispatch_log.csv. An
+# unrelated manual commit (e.g. `git add .` while tweaking styles.css)
+# can sweep that post in and publish it on erwinlares.com by accident.
+#
+# This hook refuses any commit that stages a posts/*/index.qmd whose
+# front matter doesn't list "erwinlares" in publish_to. If a post is
+# genuinely exclusive to a spoke, author it directly in that spoke's
+# own repo instead of starting it here.
+#
+# Install once per clone:
+#   git config core.hooksPath .githooks
+# ============================================================
+
+set -euo pipefail
+
+staged_posts=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^posts/[^/]+/index\.qmd$' || true)
+
+if [ -z "$staged_posts" ]; then
+  exit 0
+fi
+
+Rscript --vanilla -e '
+  args <- commandArgs(trailingOnly = TRUE)
+  bad <- character(0)
+  for (f in args) {
+    lines <- readLines(f, warn = FALSE)
+    delimiters <- which(trimws(lines) == "---")
+    if (length(delimiters) < 2) next
+    yaml_text <- paste(lines[(delimiters[1] + 1):(delimiters[2] - 1)], collapse = "\n")
+    fm <- tryCatch(yaml::yaml.load(yaml_text), error = function(e) NULL)
+    if (is.null(fm) || is.null(fm$publish_to) || !("erwinlares" %in% fm$publish_to)) {
+      bad <- c(bad, f)
+    }
+  }
+  if (length(bad) > 0) {
+    message("✗ Refusing commit — the following post(s) do not list \"erwinlares\" in publish_to:")
+    for (f in bad) message("    ", f)
+    message("If this post is exclusive to a spoke, author it directly in the destination spoke repo instead of erwinlares-site.")
+    quit(status = 1, save = "no")
+  }
+' $staged_posts

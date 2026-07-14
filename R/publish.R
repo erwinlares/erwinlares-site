@@ -6,12 +6,13 @@
 # Platforms:
 #   erwinlares         → git add/commit/push (local repo → Netlify)
 #   brug               → GitHub Contents API → the-burrows
+#   caow               → GitHub Contents API → caow-website
 #   lasrubieraspottery → [STUB] Shopify API
-#   aikidoofwisconsin  → [STUB] Squarespace API
 #   researchci         → [STUB] WordPress REST API
 #
 # Credentials in .Renviron:
-#   GITHUB_PAT_BRUG    (for the-burrows repo only)
+#   GITHUB_PAT_BRUG (for the-burrows repo only)
+#   GITHUB_PAT_CAOW (for caow-website repo only)
 # ============================================================
 
 # --- Utilities -----------------------------------------------
@@ -52,11 +53,11 @@ load_dispatch_log <- function() {
 }
 
 log_dispatch <- function(
-  post_path,
-  platform,
-  section = NA_character_,
-  status = "success",
-  msg = ""
+    post_path,
+    platform,
+    section = NA_character_,
+    status = "success",
+    msg = ""
 ) {
   entry <- data.frame(
     post_path = post_path,
@@ -95,7 +96,6 @@ get_dispatched_section <- function(log, post_path, platform) {
   matches$section[nrow(matches)] # most recent match
 }
 
-
 # --- Hub dispatch: erwinlares.com ----------------------------
 #
 # Uses existing git credentials — no PAT needed since we are
@@ -105,24 +105,21 @@ get_dispatched_section <- function(log, post_path, platform) {
 # git add stages nothing and we return success without
 # committing. This handles posts that were manually pushed
 # before publish() was in use.
-
 dispatch_erwinlares <- function(post_path, front_matter) {
   post_dir <- dirname(post_path)
   gert::git_add(post_dir)
-
   staged <- gert::git_status()
+  
   if (nrow(staged[staged$staged, ]) == 0) {
     message("erwinlares: already in repo, nothing to commit.")
     return(invisible(TRUE))
   }
-
+  
   gert::git_commit(paste0("publish: ", front_matter$title))
   gert::git_push(verbose = FALSE)
-
-  message("\u2713 Dispatched to erwinlares.com: ", front_matter$title)
+  message("✓ Dispatched to erwinlares.com: ", front_matter$title)
   invisible(TRUE)
 }
-
 
 # --- Spoke dispatchers: stubs --------------------------------
 
@@ -131,19 +128,10 @@ dispatch_shopify <- function(post_path, front_matter) {
   invisible(NULL)
 }
 
-dispatch_squarespace <- function(post_path, front_matter) {
-  message(
-    "[STUB] Squarespace dispatch not yet implemented: ",
-    front_matter$title
-  )
-  invisible(NULL)
-}
-
 dispatch_wordpress <- function(post_path, front_matter) {
   message("[STUB] WordPress dispatch not yet implemented: ", front_matter$title)
   invisible(NULL)
 }
-
 
 # --- Main orchestration --------------------------------------
 
@@ -156,12 +144,12 @@ publish <- function() {
     full.names = TRUE
   )
   post_files <- post_files[grepl("posts/[^/]+/index\\.qmd$", post_files)]
-
+  
   if (length(post_files) == 0) {
     message("No posts found.")
     return(invisible(NULL))
   }
-
+  
   # Parse front matter; keep only published posts
   posts <- lapply(post_files, function(f) {
     fm <- read_front_matter(f)
@@ -169,39 +157,41 @@ publish <- function() {
     fm
   })
   posts <- Filter(function(p) identical(p$status, "published"), posts)
-
+  
   if (length(posts) == 0) {
     message("No published posts to dispatch.")
     return(invisible(NULL))
   }
-
+  
   log <- load_dispatch_log()
-
+  
   for (post in posts) {
     if (is.null(post$publish_to)) {
       next
     }
-
+    
     for (platform in post$publish_to) {
       if (already_dispatched(log, post$path, platform)) {
-        message("Already dispatched: ", post$title, " \u2192 ", platform)
+        message("Already dispatched: ", post$title, " → ", platform)
         next
       }
-
+      
       tryCatch(
         {
           result <- switch(
             platform,
             erwinlares = dispatch_erwinlares(post$path, post),
             brug = dispatch_brug(post$path, post),
+            caow = dispatch_caow(post$path, post),
             lasrubieraspottery = dispatch_shopify(post$path, post),
-            aikidoofwisconsin = dispatch_squarespace(post$path, post),
             researchci = dispatch_wordpress(post$path, post),
             message("Unknown platform: ", platform)
           )
-          # dispatch_brug() returns the section it routed to; other
-          # dispatchers don't have a section concept and return TRUE/NULL,
-          # which is not a string, so section stays NA for them.
+          
+          # dispatch_brug() and dispatch_caow() return the section they
+          # routed to; other dispatchers don't have a section concept and
+          # return TRUE/NULL, which is not a string, so section stays NA
+          # for them.
           section <- if (is.character(result)) result else NA_character_
           log_dispatch(post$path, platform, section, "success")
         },
@@ -214,9 +204,9 @@ publish <- function() {
             conditionMessage(e)
           )
           message(
-            "\u2717 Failed: ",
+            "✗ Failed: ",
             post$title,
-            " \u2192 ",
+            " → ",
             platform,
             "\n  ",
             conditionMessage(e)
@@ -225,6 +215,6 @@ publish <- function() {
       )
     }
   }
-
+  
   invisible(NULL)
 }
