@@ -82,7 +82,7 @@ init_post <- function(slug, yaml_data = NULL) {
     "publish_to:\n",
     "  - erwinlares\n",
     "  - lasrubieraspottery\n",
-    "  - aikidoofwisconsin\n",
+    "  - caow\n",
     "  - researchci\n",
     "  - brug\n",
     "format:\n",
