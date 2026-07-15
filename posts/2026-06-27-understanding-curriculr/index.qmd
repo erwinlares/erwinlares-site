@@ -1,8 +1,18 @@
 ---
 title: "Understanding curriculr"
-subtitle: ""
-description: "One or two sentences."
-abstract: ""
+subtitle: "Turning a spreadsheet into a typeset CV"
+description: "A look at how curriculr separates CV content from layout, letting a single Excel workbook drive a polished, Typst-rendered document through Quarto."
+abstract: >
+  curriculr is an R package for producing data-driven curricula vitae from a
+  structured Excel workbook rather than hand-edited markup. I walk through the
+  core workflow -- reading CV content from the workbook, converting it into
+  Typst layout blocks, and rendering the result as a PDF via Quarto -- and
+  explain the design choice behind it: content lives in the spreadsheet,
+  rendering configuration lives in Quarto, and transformation logic lives in
+  small, reusable R functions. I also cover the resume/CV variant switch, which
+  lets you toggle a shorter version of the same document without touching any
+  R code, and situate curriculr within the broader reproducible-research
+  ecosystem it shares conventions with (toolero, containr, and submitr).
 author:
 - name: Erwin Lares
   affiliation: Research Cyberinfrastructure (RCI), Division of Information Technology,
@@ -22,7 +32,7 @@ categories:
   - reproducibility
   - productivity
   - coding
-status: draft
+status: published
 publish_to:
   - erwinlares
   - lasrubieraspottery
@@ -459,3 +469,59 @@ As for the two design choices — they're actually solving the same underlying p
 **`results = "asis"`** solves the R side of the same problem. Normally when an R chunk calls `cat()`, knitr wraps the output in a code block before passing it to Quarto. `results = "asis"` tells knitr to pass the output through verbatim, with no wrapping. So the chain is: `.cv_entry()` builds the string → `cat()` writes it → knitr passes it through raw → Quarto sees a `{=typst}` block → Typst compiles it. Remove either piece and the chain breaks — without `{=typst}` Quarto garbles the markup, without `results = "asis"` knitr wraps it in a fence and Quarto never sees raw Typst at all.
 
 It's a clean stack once you see it, but it does require knowing which layer each piece belongs to.
+
+## Using curriculr
+
+Given how much machinery sits under the hood, it's worth stepping back and describing what actually happens when you use curriculr, day to day. The internals covered above are there to explain *why* the package behaves the way it does; using it, mercifully, requires knowing very little of that.
+
+### The first time
+
+The first time you touch curriculr, you're in scaffold mode, whether you realize it or not. You call `create_cv()` with no arguments, curriculr copies two files into the working directory, a template workbook and a placeholder image, and prints a short list of next steps. Nothing renders yet.
+
+```r
+library(curriculr)
+create_cv()
+```
+
+Those two artifacts are the whole of curriculr's "installation" step, in a sense: an `.xlsx` workbook that will hold your CV content, and a stand-in photo you're meant to replace with your own. Open the workbook, fill in the `profile` sheet (name, email, a line about yourself), then work through the section sheets. It may not be unreasonable to think of this as the only time you'll look at R code before you have a working CV — the render itself needs just one more call:
+
+```r
+create_cv(
+  data  = "cv-data-template.xlsx",
+  photo = "your-photo.png"
+)
+```
+
+That's render mode — the same read, resolve, write, render pipeline covered earlier — and it's the last time you need to think about R at all.
+
+### Keeping it current
+
+Recall that curriculr treats the workbook, not the R session, as the single source of truth. In other words: once the CV exists, "updating your CV" and "editing the spreadsheet" are the same action. There's no step where you write R code to add a job or a publication.
+
+Say a new conference talk needs to go on the CV. You'd open the
+`presentations` sheet, add one row — title, venue, dates, and whatever `include_in_resume` value you want — and save the file:
+
+| title | unit | startMonth | startYear | endMonth | endYear | where | detail | include_in_resume |
+|---|---|---|---|---|---|---|---|---|
+| Reproducible CVs with curriculr | BRUG Meetup | July | 2026 | July | 2026 | Madison, WI | Lightning talk on the package's design | TRUE |
+
+Then you rerun the same `create_cv()` call you used the first time, pointed at the same workbook:
+
+```r
+create_cv(
+  data  = "cv-data-template.xlsx",
+  photo = "your-photo.png"
+)
+```
+
+curriculr rereads the whole workbook, resolves the theme, rewrites `CV.qmd`, and rerenders — the new entry lands wherever `startYear` places it, since sections sort in reverse-chronological order automatically. You don't reorder anything by hand, and you don't touch `CV.qmd` directly (it's regenerated fresh from the template every time, sentinels and all, so any manual edits to it wouldn't survive the next render anyway).
+
+### The shape of it
+
+Put the two paths together and the whole lifecycle looks like this:
+
+![Caption](path/to/image.jpg){#fig-id width="500px" height="375px" fig-align="center" fig-alt="Descriptive text for screen readers"}
+
+![Using `curriculr`](curriculr-diagram.png){width="px" height="375px"fig-alt="a diagram showcasing how to use curricular"}
+
+Everything below "render mode" is the loop you'll actually live in: edit a row, rerun the same call, get a new PDF. The scaffolding step happens exactly once per CV.
