@@ -9,7 +9,7 @@ categories:
   - aikido
   - journal
   - personal
-status: draft
+status: published
 publish_to:
   - erwinlares
 format:
