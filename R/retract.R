@@ -87,6 +87,17 @@ retract_erwinlares <- function(post_path) {
   post_dir <- dirname(post_path)
   post_dir_name <- basename(post_dir)
   
+  if (post_dir_name %in% c("posts", ".", "")) {
+    stop(
+      "post_path resolves to the top-level '", post_dir_name,
+      "' directory, not a post's index.qmd. Refusing to delete it. ",
+      "Did you mean a path like 'posts/2026-07-01-my-post/index.qmd'?",
+      call. = FALSE
+    )
+  }
+  
+  
+  
   if (!dir.exists(post_dir)) {
     message(
       "erwinlares: ",
