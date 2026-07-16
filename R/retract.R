@@ -78,11 +78,13 @@ retract <- function(post_path, platform) {
 # retraction counterpart to dispatch_erwinlares() in publish.R, using the
 # same local git credentials (no PAT needed).
 #
-# gert::git_rm() stages the deletion AND removes the files from disk in
-# one step, mirroring how gert::git_add() is used in dispatch_erwinlares().
-# Idempotent the same way that function is: if the directory's already
-# gone, or nothing ends up staged, this says so and returns without an
-# empty commit rather than erroring.
+# gert::git_rm() is built on libgit2's git_index_remove_bypath, which only
+# stages the removal in the index — it does NOT unlink files from disk
+# (unlike command-line `git rm`, which does both). So this explicitly
+# unlink()s the directory first, then calls git_rm() to stage that
+# removal for commit. Idempotent the same way dispatch_erwinlares() is:
+# if the directory's already gone, or nothing ends up staged, this says
+# so and returns without an empty commit rather than erroring.
 retract_erwinlares <- function(post_path) {
   post_dir <- dirname(post_path)
   post_dir_name <- basename(post_dir)
@@ -107,6 +109,7 @@ retract_erwinlares <- function(post_path) {
     return(invisible(TRUE))
   }
   
+  unlink(post_dir, recursive = TRUE)
   gert::git_rm(post_dir)
   staged <- gert::git_status()
   
@@ -159,6 +162,18 @@ retract_gh <- function(
     stop(pat_env_var, " not set in .Renviron", call. = FALSE)
   }
   
+  
+  post_dir_name <- basename(dirname(post_path))
+  if (post_dir_name %in% c("posts", ".", "")) {
+    stop(
+      "post_path resolves to the top-level '", post_dir_name,
+      "' directory, not a post's index.qmd. Refusing to delete it. ",
+      "Did you mean a path like 'posts/2026-07-01-my-post/index.qmd'?",
+      call. = FALSE
+    )
+  }
+  
+  
   log <- load_dispatch_log()
   
   if (is.null(section)) {
@@ -174,7 +189,6 @@ retract_gh <- function(
     message("  (section \"", section, "\" found in dispatch_log.csv)")
   }
   
-  post_dir_name <- basename(dirname(post_path))
   commit_msg <- paste0("retract: ", post_dir_name)
   
   source_files <- list.files(dirname(post_path), full.names = TRUE)
