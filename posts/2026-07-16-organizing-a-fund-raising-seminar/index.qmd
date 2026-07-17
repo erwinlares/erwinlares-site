@@ -43,9 +43,11 @@ We decided to funnel whatever we raised through [Global Empowerment Mission (GEM
 
 ## What the mat looked like that Saturday
 
-The mat was full. People trained, and in training, gave their time toward something larger than the technique itself. I demoed nikkyo that day — a small detail, but it's the part I still remember in my body, more than any of the numbers that came after. Some people couldn't make the trip and gave online instead, in the days around the event.
+The mat was full. People trained, and in training, gave their time toward something larger than the technique itself. I taught two techniques that day, uchi kaitennage and nikkyo, chosen less for the techniques themselves than for what they let me say about connection — something I've been trying to get across to my own students for a while now. The framework came from Terry Leonard sensei, and it's a little counterintuitive the first time you hear it: nage holds the knife, and holds it assertively. That sounds backward — isn't the knife supposed to be the threat? — but the logic is that its presence is exactly what keeps nage honest. Let go of the connection, and the knife doesn't go away; it ends up pointing back at you.
 
-Between the two, the community raised close to $10,000 — most of it, as it happens, in the final few days, once word reached more people. Seventy-two separate donations went into that total, most of them modest, somewhere between $100 and $150. That's worth noting on its own: this wasn't one or two large gifts carrying the total, but a lot of people independently deciding it was worth doing something.
+From there, everything followed the Capital Aikikai Federation's usual approach: connect to uke at the edge of your own space, settle into that connection before doing anything else, keep two lines, move linearly, keep uke in your center. What decided the outcome was one detail — how the knife got taken. Grab it from the top and the motion wants to slash, which is where uchi kaitennage comes from. Grab it from the bottom and it wants to stab instead, and that's nikkyo. A small mechanical choice, a different technique entirely — which is probably why I still remember demoing it more clearly than I remember most of what came after.
+
+Not everyone could be on the mat, though. Some gave online instead, in the days around the event. Between the two, the community raised close to \$10,000  most of it, as it happens, in the final few days, once word reached more people. Seventy-two separate donations went into that total, most of them modest, somewhere between \$100 and \$150. That's worth noting on its own: this wasn't one or two large gifts carrying the total, but a lot of people independently deciding it was worth doing something.
 
 ```{r}
 #| echo: false
@@ -113,7 +115,7 @@ I'm grateful to everyone who trained, gave, or helped in some smaller way I may 
 
 ## What I keep thinking about
 
-Recovery in Venezuela is still going, and it'll keep going long after this post is off the front page. What we did was small next to that — one Saturday, a few hundred people, some money moved through an organization that knows how to get it where it needs to go. It's not going to rebuild anything o n its own. But it wasn't nothing either, and I'm glad I got to be part of it.
+Recovery in Venezuela is still going, and it'll keep going long after this post is off the front page. What we did was small next to that — one Saturday, a small group of people, some money moved through an organization that knows how to get it where it needs to go. It's not going to rebuild anything o n its own. But it wasn't nothing either, and I'm glad I got to be part of it.
 
 *#Venezuela #Aikido #FloridaAikikai #CapitalAikikaiofWisconsin #AikidoMiramar #KenoshaAikikai*
 
