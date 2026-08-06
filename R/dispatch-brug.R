@@ -78,7 +78,7 @@ dispatch_brug <- function(post_path, front_matter) {
   source_files <- source_files[!dir.exists(source_files)] # skip subdirs, e.g. Quarto's index_files/
   
   for (f in source_files) {
-    api_path <- paste0(section, "/", post_dir_name, "/", basename(f))
+    api_path <- paste0(section, "/", post_dir_name, "/", utils::URLencode(basename(f)))
     
     # Prepare content — clean front matter for index.qmd, raw bytes for everything else
     if (basename(f) == "index.qmd") {
