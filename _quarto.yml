@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: _site
 
+filters:
+  - lightbox
+
 website:
   title: "Erwin Lares"
   description: "Linguist, data scientist, potter, aikidoka"

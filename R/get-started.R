@@ -21,11 +21,45 @@ NEW POST
   5. publish()
 
 EDIT AN EXISTING POST
-  1. Edit the .qmd file directly
+  1. Edit the .qmd file directly (text, images, whatever)
   2. If you changed the YAML front matter, re-render first:
      quarto render posts/your-post-slug/index.qmd
      then commit the updated _freeze files
-  3. publish()
+  ⚠  publish() only sends to platforms NOT already logged as
+     dispatched for this post. Editing content — even adding
+     images — does not clear that on its own. This applies to
+     erwinlares itself, not just the spokes.
+  3. retract() from every platform that needs the new version,
+     then publish() to resend:
+       retract('posts/your-post-slug/index.qmd', platform = 'erwinlares')
+       retract('posts/your-post-slug/index.qmd', platform = 'brug')
+       retract('posts/your-post-slug/index.qmd'', platform = 'caow')
+       publish()
+     Only retract the platforms you're actually resending to —
+     publish() will skip any you leave alone.
+     
+SPOKE-EXCLUSIVE POST (lives on a spoke only, not erwinlares.com)
+  publish_to alone does NOT keep a post off erwinlares.com — it only
+  gates dispatch. Quarto renders and Netlify serves anything in
+  posts/ that isn't marked draft, regardless of publish_to.
+  1. Add draft: true to the post's YAML front matter (Quarto's
+     native key, not status) — this is what actually excludes it
+     from rendering/listing on erwinlares.com
+  2. Set publish_to to the spoke(s) only, e.g.:
+       publish_to:
+         - caow
+  3. The pre-commit hook refuses any commit staging a
+     posts/*/index.qmd without 'erwinlares' in publish_to — this
+     will trip it. Commit this file on its own:
+       git commit --no-verify
+     (scope this to spoke-exclusive posts specifically — not a
+     general habit for getting past the hook)
+  4. publish() → dispatches only to the platform(s) listed
+  ⚠  This works, but cuts against the reason posts/ exists as a
+     single source of truth. If a post is permanently and entirely
+     spoke-only, consider authoring it directly in the destination
+     spoke repo instead — skips steps 1 and 3 entirely, and doesn't
+     stretch the hub's original design.
 
 RETRACT A POST
   Use when a post landed in the wrong place, needs pulling from a
