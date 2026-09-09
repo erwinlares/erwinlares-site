@@ -42,6 +42,8 @@ containr   →   Encapsulate that project into a portable container
 submitr    →   Run that container on CHTC
 ```
 
+![Hex sticker for the workshop series](n2c-workshop-logo.png)
+
 You will see this same project -- a real, if modest, analysis -- go from a folder of scripts on a laptop, to a well-organized and documented R project, to a container that runs identically on any Docker-compatible machine, to a job executing on CHTC and returning results. Each session solves a genuine problem that shows up somewhere in that arc, and each one hands you something you can keep using afterward.
 
 ## The three sessions
@@ -96,5 +98,5 @@ Getting these set up ahead of time means session time goes to the workflow itsel
 
 ## Questions
 
-Registration details are still being finalized. In the meantime, if you have questions or want to be notified when sign-up opens, reach out to me at [erwinlares@wisc.edu](mailto:erwinlares@wisc.edu) <!-- confirm this is the preferred contact address before publishing -->.
+Registration details are still being finalized. In the meantime, if you have questions or want to be notified when sign-up opens, reach out to me at [erwin.lares@wisc.edu](mailto:erwinlares@wisc.edu)
 

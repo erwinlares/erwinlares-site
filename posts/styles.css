@@ -134,5 +134,7 @@ a:hover {
   color: #C5050C;
 }
 
-
+.quarto-figure figcaption {
+  text-align: center;
+}
 
