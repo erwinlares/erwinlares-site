@@ -1,7 +1,5 @@
 ---
 title: "From the Notebook to the Cluster Workshop Series"
-subtitle: ""
-description: "One or two sentences."
 abstract: "If you have ever gotten an analysis working perfectly on your laptop and then watched it fall apart the moment someone else tried to run it -- a missing package version, a path that only exists on your machine, an environment that quietly drifted out from under you -- this series is for you. That gap between 'it works for me' and 'it works, period' is exactly where most computational research projects get stuck, and it is the gap this series is designed to close.
 **From the Notebook to the Cluster** is a three-part, hands-on workshop series for UW-Madison researchers who work in R and want to move an analysis from a personal laptop to the Center for High Throughput Computing (CHTC). It is not a series about three R packages. It is a series about a workflow: how to take a research project from 'runs on my machine' to reproducible, to portable, to something that can scale out across hundreds of CHTC jobs. I have written three R packages -- `toolero`, `containr`, and `submitr` -- that happen to make each stage of that workflow easier, and each session uses one of them as the vehicle. But the packages are in service of the workflow, not the other way around."
 image: "n2c-workshop-logo-thumb.png"
