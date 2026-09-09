@@ -61,7 +61,7 @@ The starting point is the mess nearly every research project accumulates: script
 A reproducible project on your laptop is still tied to your laptop. This session asks why `renv` alone is not enough to guarantee that an analysis runs the same way somewhere else, and introduces containers as the answer. Using `containr`, you will build a Dockerfile, build and run an image locally, and publish that image to a container registry. You will leave with a published container image for `minimal-project` that runs identically on any Docker-compatible machine.
 
 ### Part 3 -- Scaling Out: Running Containerized R Projects on CHTC with `submitr`
-**Wednesday, October 21 | from 2:00 — 3:30pm | CS 3139** 
+**Wednesday, October 22 | from 2:00 — 3:30pm | CS 3139** 
 
 A portable container is ready to run anywhere -- including, at last, on CHTC. This session covers what a containerized project needs to run as an HTCondor job: preparing and uploading the required assets, submitting the job with `submitr`, and retrieving results. You will leave with a working submission file, executable, and a completed CHTC job for `minimal-project`, along with the workflow to do the same for your own research.
 
